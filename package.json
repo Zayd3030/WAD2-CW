@@ -1,0 +1,17 @@
+{
+  "name": "wad2-cw",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.2",
+    "gray-nedb": "^1.8.3",
+    "sqlite3": "^5.1.7",
+    "wad2-cw": "file:"
+  }
+}
