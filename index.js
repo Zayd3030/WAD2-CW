@@ -27,6 +27,10 @@ app.get("/", (req, res) => {
     res.redirect("/courses");
   });
   
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+  });
 
 // Start server
 app.listen(3000,() =>{
