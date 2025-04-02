@@ -1,0 +1,22 @@
+{{> header}}
+
+<h2>{{course.name}}</h2>
+<p>{{course.description}}</p>
+<p>Duration: {{course.duration}}</p>
+
+<h3>Upcoming Classes</h3>
+{{#classes}}
+  <div class="class-card">
+    <p>Date: {{date}}</p>
+    <p>Time: {{time}}</p>
+    <p>Location: {{location}}</p>
+    <p>Price: £{{price}}</p>
+    <form method="POST" action="/courses/book/{{_id}}">
+      <button type="submit">Book this Class</button>
+    </form>
+  </div>
+{{/classes}}
+
+{{^classes}}
+  <p>No classes scheduled for this course yet.</p>
+{{/classes}}
