@@ -2,6 +2,7 @@
   <nav>
         {{#user}}
       <span>Welcome, {{user.username}}</span>
+      | <a href="/courses/my-bookings">My Bookings</a>
       {{#user.isOrganiser}} | <a href="/admin">Admin Dashboard</a>{{/user.isOrganiser}}
       | <a href="/logout">Logout</a>
     {{/user}}

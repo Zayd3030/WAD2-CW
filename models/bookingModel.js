@@ -1,10 +1,17 @@
 const Datastore = require("nedb");
-const db = new Datastore({ filename: "bookings.db", autoload: true });
+const db = new Datastore({ filename: "./data/bookings.db", autoload: true });
 
-exports.bookClass = (booking, callback) => db.insert(booking, callback);
+// Add a booking
+exports.addBooking = (booking, callback) => {
+  db.insert(booking, callback);
+};
 
-exports.getBookingsForUser = (username, callback) =>
-  db.find({ username }, callback);
-
-exports.getBookingsForClass = (classId, callback) =>
+// Get bookings for a specific class
+exports.getBookingsForClass = (classId, callback) => {
   db.find({ classId }, callback);
+};
+
+// Get bookings for a specific user
+exports.getBookingsByUser = (userId, callback) => {
+  db.find({ userId }, callback);
+};
