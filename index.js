@@ -8,10 +8,19 @@ const bodyParser = require("body-parser");
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public")));
 
+
 // View engine setup
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
 app.set("views", path.join(__dirname, "views"));
+
+app.use(
+    session({
+      secret: "secureSecretKey",
+      resave: false,
+      saveUninitialized: true,
+    })
+  );
 
 // Load Routes
 const authRoutes = require("./routes/authRoutes");

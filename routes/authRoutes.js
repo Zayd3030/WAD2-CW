@@ -4,12 +4,16 @@ const userModel = require("../models/userModel");
 
 // Show login page
 router.get("/login", (req, res) => {
-  res.render("user/login", { message: req.session.message });
+  const message = req.session?.message || null;
+  req.session.message = null; // clear message after showing it once
+  res.render("user/login", { message });
 });
 
 // Show register page
 router.get("/register", (req, res) => {
-  res.render("user/register", { message: req.session.message });
+  const message = req.session?.message || null;
+  req.session.message = null;
+  res.render("user/register", { message });
 });
 
 // Handle registration
