@@ -14,23 +14,45 @@ router.get("/", (req, res) => {
   });
 });
 
-// ✅ Booking confirmation page
+// Booking confirmation page
 router.get("/confirmation", checkAuthenticated, (req, res) => {
   res.render("user/confirmation");
 });
 
-// ✅ View user's booking history
-router.get("/my-bookings", checkAuthenticated, (req, res) => {
-  bookingModel.getBookingsByUser(req.session.user._id, (err, bookings) => {
+// My Bookings with full class + course info and message
+router.get("/my-bookings", checkAuthenticated, async (req, res) => {
+  bookingModel.getBookingsByUser(req.session.user._id, async (err, bookings) => {
+    const message = req.session.message;
+    req.session.message = null;
+
     if (!bookings || bookings.length === 0) {
-      return res.render("user/myBookings", { bookings: [] });
+      return res.render("user/myBookings", { bookings: [], message });
     }
 
-    res.render("user/myBookings", { bookings });
+    const enhancedBookings = await Promise.all(
+      bookings.map(async (booking) => {
+        return new Promise((resolve) => {
+          classModel.getClassById(booking.classId, (err, classData) => {
+            if (!classData) return resolve(null);
+
+            courseModel.getCourseById(classData.courseId, (err, courseData) => {
+              resolve({
+                ...booking,
+                class: classData,
+                course: courseData,
+              });
+            });
+          });
+        });
+      })
+    );
+
+    const filtered = enhancedBookings.filter(b => b !== null);
+    res.render("user/myBookings", { bookings: filtered, message });
   });
 });
 
-// ✅ Book a class (with duplicate prevention)
+// Book a class with duplicate prevention
 router.post("/book/:classId", checkAuthenticated, (req, res) => {
   const userId = req.session.user._id;
   const classId = req.params.classId;
@@ -55,7 +77,15 @@ router.post("/book/:classId", checkAuthenticated, (req, res) => {
   });
 });
 
-// ✅ View specific course and its classes
+// Cancel Booking
+router.post("/cancel-booking/:bookingId", checkAuthenticated, (req, res) => {
+  bookingModel.deleteBooking(req.params.bookingId, () => {
+    req.session.message = "Booking cancelled successfully.";
+    res.redirect("/courses/my-bookings");
+  });
+});
+
+// View single course and its classes
 router.get("/:id", checkAuthenticated, (req, res) => {
   courseModel.getCourseById(req.params.id, (err, course) => {
     if (err || !course) return res.send("Course not found");

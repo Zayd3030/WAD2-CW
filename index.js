@@ -11,25 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-    if (req.session && req.session.user) {
-      res.locals.user = {
-        username: req.session.user.username,
-        isOrganiser: req.session.user.role === "organiser",
-      };
-    } else {
-      res.locals.user = null;
-    }
-    next();
-  });
-  
-
-// View engine setup
-app.engine("mustache", mustacheExpress());
-app.set("view engine", "mustache");
-app.set("views", path.join(__dirname, "views"));
-
-// Session setup
+// ✅ Session setup (must be BEFORE user injection)
 app.use(
   session({
     secret: "secureSecretKey",
@@ -38,11 +20,23 @@ app.use(
   })
 );
 
-// Inject session user into all views
+// ✅ Inject session user into all views (AFTER session setup)
 app.use((req, res, next) => {
-  res.locals.user = req.session?.user || null;
+  if (req.session && req.session.user) {
+    res.locals.user = {
+      username: req.session.user.username,
+      isOrganiser: req.session.user.role === "organiser",
+    };
+  } else {
+    res.locals.user = null;
+  }
   next();
 });
+
+// View engine setup
+app.engine("mustache", mustacheExpress());
+app.set("view engine", "mustache");
+app.set("views", path.join(__dirname, "views"));
 
 // Routes
 const authRoutes = require("./routes/authRoutes");

@@ -1,0 +1,30 @@
+{{> header}}
+
+<h2>Manage Users</h2>
+
+{{#users}}
+  <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+    <p><strong>Username:</strong> {{username}}</p>
+    <p><strong>Role:</strong> {{role}}</p>
+
+    {{#isOrganiser}}
+      <form method="POST" action="/admin/remove-organiser/{{_id}}" style="display:inline;">
+        <button type="submit">Remove Organiser</button>
+      </form>
+    {{/isOrganiser}}
+
+    {{^isOrganiser}}
+      <form method="POST" action="/admin/make-organiser/{{_id}}" style="display:inline;">
+        <button type="submit">Make Organiser</button>
+      </form>
+    {{/isOrganiser}}
+
+    <form method="POST" action="/admin/delete-user/{{_id}}" style="display:inline;">
+      <button type="submit" style="color: red;">Delete User</button>
+    </form>
+  </div>
+{{/users}}
+
+{{^users}}
+  <p>No users found.</p>
+{{/users}}

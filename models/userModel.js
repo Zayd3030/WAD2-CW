@@ -25,3 +25,18 @@ exports.authenticate = (username, password, callback) => {
   });
 };
 
+// Get all users
+exports.getAllUsers = (callback) => {
+  db.find({}, callback);
+};
+
+// Update user role
+exports.updateUserRole = (userId, newRole, callback) => {
+  db.update({ _id: userId }, { $set: { role: newRole } }, {}, callback);
+};
+
+// Delete user
+exports.deleteUser = (userId, callback) => {
+  db.remove({ _id: userId }, {}, callback);
+};
+

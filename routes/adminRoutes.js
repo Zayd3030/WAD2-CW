@@ -109,4 +109,58 @@ router.post("/delete-class/:id", checkOrganiser, (req, res) => {
   });
 });
 
+// Admin - remove user from booking
+router.post("/remove-booking/:bookingId", checkOrganiser, (req, res) => {
+  bookingModel.deleteBooking(req.params.bookingId, () => {
+    res.redirect("back");
+  });
+});
+
+const userModel = require("../models/userModel"); // make sure this is at the top
+
+// View All Users & Organisers
+router.get("/manage-users", checkOrganiser, (req, res) => {
+  userModel.getAllUsers((err, users) => {
+    if (err || !users) {
+      return res.send("Error loading users");
+    }
+
+    // Define isOrganiser here — inside the callback
+    const enhancedUsers = users.map(user => ({
+      ...user,
+      isOrganiser: user.role === "organiser"
+    }));
+
+    res.render("admin/manageUsers", { users: enhancedUsers });
+  });
+});
+
+
+// Add Organiser
+router.post("/make-organiser/:userId", checkOrganiser, (req, res) => {
+  userModel.updateUserRole(req.params.userId, "organiser", () => {
+    res.redirect("/admin/manage-users");
+  });
+});
+
+// Remove Organiser (demote to user)
+router.post("/remove-organiser/:userId", checkOrganiser, (req, res) => {
+  userModel.updateUserRole(req.params.userId, "user", () => {
+    res.redirect("/admin/manage-users");
+  });
+});
+
+// Delete User
+router.post("/delete-user/:userId", checkOrganiser, (req, res) => {
+  userModel.deleteUser(req.params.userId, () => {
+    res.redirect("/admin/manage-users");
+  });
+});
+
+// Get all users and add isOrganiser property
+users = users.map(user => ({
+  ...user,
+  isOrganiser: user.role === "organiser"
+}));
+
 module.exports = router;

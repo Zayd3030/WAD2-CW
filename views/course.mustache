@@ -12,9 +12,10 @@
     <p>Time: {{time}}</p>
     <p>Location: {{location}}</p>
     <p>Price: £{{price}}</p>
-    <form method="POST" action="/courses/book/{{_id}}">
-      <button type="submit">Book this Class</button>
-    </form>
+<form method="POST" action="/courses/book/{{_id}}">
+  <input type="hidden" name="courseId" value="{{../course._id}}">
+  <button type="submit">Book Class</button>
+</form>
   </div>
 {{/classes}}
 

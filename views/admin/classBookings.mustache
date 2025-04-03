@@ -2,7 +2,13 @@
 <h2>Class Bookings</h2>
 
 {{#bookings}}
-  <p>User: {{username}}</p>
+  <div style="margin-bottom: 10px; border: 1px solid #ccc; padding: 10px;">
+  <p><strong>User:</strong> {{username}}</p>
+
+  <form method="POST" action="/admin/remove-booking/{{_id}}">
+    <button type="submit" style="color: red;">Remove from Booking</button>
+  </form>
+</div>
 {{/bookings}}
 
 {{^bookings}}

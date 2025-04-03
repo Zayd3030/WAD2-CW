@@ -15,3 +15,8 @@ exports.getBookingsForClass = (classId, callback) => {
 exports.getBookingsByUser = (userId, callback) => {
   db.find({ userId }, callback);
 };
+
+// Deletes a booking
+exports.deleteBooking = (bookingId, callback) => {
+  db.remove({ _id: bookingId }, {}, callback);
+};
