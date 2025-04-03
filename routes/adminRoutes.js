@@ -5,9 +5,24 @@ const courseModel = require("../models/courseModel");
 const classModel = require("../models/classModel");
 const bookingModel = require("../models/bookingModel");
 
-// Admin Dashboard
+// Admin Dashboard with courses and their classes
 router.get("/", checkOrganiser, (req, res) => {
-  res.render("admin/dashboard");
+  courseModel.getAllCourses((err, courses) => {
+    if (err || !courses) return res.render("admin/dashboard", { courses: [] });
+
+    let pending = courses.length;
+    if (pending === 0) return res.render("admin/dashboard", { courses: [] });
+
+    courses.forEach((course, i) => {
+      classModel.getClassesByCourse(course._id, (err, classes) => {
+        courses[i].classes = classes;
+        pending--;
+        if (pending === 0) {
+          res.render("admin/dashboard", { courses });
+        }
+      });
+    });
+  });
 });
 
 // Add New Course - Form
@@ -79,6 +94,7 @@ router.get("/edit-class/:id", checkOrganiser, (req, res) => {
   });
 });
 
+// Update Class
 router.post("/edit-class/:id", checkOrganiser, (req, res) => {
   const { date, time, location, price } = req.body;
   classModel.updateClass(req.params.id, { date, time, location, price }, () => {

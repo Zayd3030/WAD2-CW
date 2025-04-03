@@ -1,12 +1,12 @@
 <header>
   <nav>
-    <a href="/courses">Courses</a>
-
-    {{#user}}
+        {{#user}}
       <span>Welcome, {{user.username}}</span>
       {{#user.isOrganiser}} | <a href="/admin">Admin Dashboard</a>{{/user.isOrganiser}}
       | <a href="/logout">Logout</a>
     {{/user}}
+
+    <a href="/courses">Courses</a>
 
     {{^user}}
       <a href="/login">Login</a>

@@ -1,4 +1,36 @@
 {{> header}}
-<h2>Organiser Dashboard</h2>
+
+<h2>Admin Dashboard</h2>
 
 <a href="/admin/add-course">Add New Course</a>
+
+{{#courses}}
+  <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
+    <h3>{{name}}</h3>
+    <p>{{description}}</p>
+    <p>Duration: {{duration}}</p>
+
+    <a href="/admin/edit-course/{{_id}}">Edit Course</a>
+    <form method="POST" action="/admin/delete-course/{{_id}}" style="display:inline;">
+      <button type="submit" style="color:red;">Delete Course</button>
+    </form>
+
+    <a href="/admin/add-class/{{_id}}">Add Class</a>
+
+    <h4>Classes:</h4>
+    {{#classes}}
+      <p>
+        {{date}} - {{time}} at {{location}} (£{{price}})
+        <a href="/admin/edit-class/{{_id}}">Edit</a>
+        <form method="POST" action="/admin/delete-class/{{_id}}" style="display:inline;">
+          <button type="submit" style="color:red;">Delete</button>
+        </form>
+        <a href="/admin/bookings/{{_id}}">View Bookings</a>
+      </p>
+    {{/classes}}
+
+    {{^classes}}
+      <p>No classes yet for this course.</p>
+    {{/classes}}
+  </div>
+{{/courses}}

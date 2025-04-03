@@ -11,6 +11,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use((req, res, next) => {
+    if (req.session && req.session.user) {
+      res.locals.user = {
+        username: req.session.user.username,
+        isOrganiser: req.session.user.role === "organiser",
+      };
+    } else {
+      res.locals.user = null;
+    }
+    next();
+  });
+  
+
 // View engine setup
 app.engine("mustache", mustacheExpress());
 app.set("view engine", "mustache");
