@@ -50,4 +50,47 @@ router.get("/bookings/:classId", checkOrganiser, (req, res) => {
   });
 });
 
+// Edit Course Form
+router.get("/edit-course/:id", checkOrganiser, (req, res) => {
+  courseModel.getCourseById(req.params.id, (err, course) => {
+    res.render("admin/editCourse", { course });
+  });
+});
+
+// Update Course
+router.post("/edit-course/:id", checkOrganiser, (req, res) => {
+  const { name, description, duration } = req.body;
+  courseModel.updateCourse(req.params.id, { name, description, duration }, () => {
+    res.redirect("/admin");
+  });
+});
+
+// Delete Course
+router.post("/delete-course/:id", checkOrganiser, (req, res) => {
+  courseModel.deleteCourse(req.params.id, () => {
+    res.redirect("/admin");
+  });
+});
+
+// Edit Class
+router.get("/edit-class/:id", checkOrganiser, (req, res) => {
+  classModel.getClassById(req.params.id, (err, classItem) => {
+    res.render("admin/editClass", { classItem });
+  });
+});
+
+router.post("/edit-class/:id", checkOrganiser, (req, res) => {
+  const { date, time, location, price } = req.body;
+  classModel.updateClass(req.params.id, { date, time, location, price }, () => {
+    res.redirect("/admin");
+  });
+});
+
+// Delete Class
+router.post("/delete-class/:id", checkOrganiser, (req, res) => {
+  classModel.deleteClass(req.params.id, () => {
+    res.redirect("/admin");
+  });
+});
+
 module.exports = router;
