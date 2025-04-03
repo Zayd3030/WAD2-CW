@@ -157,10 +157,4 @@ router.post("/delete-user/:userId", checkOrganiser, (req, res) => {
   });
 });
 
-// Get all users and add isOrganiser property
-users = users.map(user => ({
-  ...user,
-  isOrganiser: user.role === "organiser"
-}));
-
 module.exports = router;
