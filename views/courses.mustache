@@ -1,16 +1,24 @@
 {{> header}}
 
-<h2>Available Courses</h2>
+{{#user}}
+  <h2 class="text-center mb-4">Welcome, {{username}} 👋</h2>
+{{/user}}
 
-{{#courses}}
-  <div class="course-card">
-    <h3>{{name}}</h3>
-    <p>{{description}}</p>
-    <p>Duration: {{duration}}</p>
-    <a href="/courses/{{_id}}">View Classes</a>
-  </div>
-{{/courses}}
+<h3 class="mb-3">Available Courses</h3>
 
-{{^courses}}
-  <p>No courses available right now.</p>
-{{/courses}}
+<div class="row">
+  {{#courses}}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{name}}</h5>
+          <p class="card-text">
+            {{description}}<br>
+            <strong>Duration:</strong> {{duration}} weeks
+          </p>
+          <a href="/courses/{{_id}}" class="btn btn-primary">View Classes</a>
+        </div>
+      </div>
+    </div>
+  {{/courses}}
+</div>

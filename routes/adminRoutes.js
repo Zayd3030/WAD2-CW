@@ -65,6 +65,35 @@ router.get("/bookings/:classId", checkOrganiser, (req, res) => {
   });
 });
 
+const PDFDocument = require("pdfkit"); // add to top of file if not there
+
+// Export bookings for a class as PDF
+router.get("/bookings/:classId/export", checkOrganiser, (req, res) => {
+  bookingModel.getBookingsForClass(req.params.classId, (err, bookings) => {
+    if (err) return res.send("Error generating PDF");
+
+    const doc = new PDFDocument();
+    res.setHeader("Content-Disposition", "attachment; filename=class-bookings.pdf");
+    res.setHeader("Content-Type", "application/pdf");
+
+    doc.pipe(res);
+
+    doc.fontSize(20).text("Class Booking List", { align: "center" });
+    doc.moveDown();
+
+    if (bookings.length === 0) {
+      doc.text("No bookings found.");
+    } else {
+      bookings.forEach((booking, index) => {
+        doc.fontSize(12).text(`${index + 1}. ${booking.username}`);
+      });
+    }
+
+    doc.end();
+  });
+});
+
+
 // Edit Course Form
 router.get("/edit-course/:id", checkOrganiser, (req, res) => {
   courseModel.getCourseById(req.params.id, (err, course) => {

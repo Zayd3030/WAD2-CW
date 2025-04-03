@@ -1,6 +1,11 @@
 {{> header}}
 <h2>Class Bookings</h2>
 
+<a href="/admin/bookings/{{bookings.0.classId}}/export" target="_blank">
+  📄 Download Booking List as PDF
+</a>
+
+
 {{#bookings}}
   <div style="margin-bottom: 10px; border: 1px solid #ccc; padding: 10px;">
   <p><strong>User:</strong> {{username}}</p>
