@@ -1,0 +1,15 @@
+{{> header}}
+<h2>Add New Course</h2>
+
+<form method="POST" action="/admin/add-course">
+  <label>Name:</label><br>
+  <input type="text" name="name" required><br>
+
+  <label>Description:</label><br>
+  <textarea name="description" required></textarea><br>
+
+  <label>Duration:</label><br>
+  <input type="text" name="duration" required><br>
+
+  <button type="submit">Add Course</button>
+</form>

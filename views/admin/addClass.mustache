@@ -1,0 +1,18 @@
+{{> header}}
+<h2>Add Class to Course</h2>
+
+<form method="POST" action="/admin/add-class/{{courseId}}">
+  <label>Date:</label><br>
+  <input type="date" name="date" required><br>
+
+  <label>Time:</label><br>
+  <input type="time" name="time" required><br>
+
+  <label>Location:</label><br>
+  <input type="text" name="location" required><br>
+
+  <label>Price (£):</label><br>
+  <input type="number" name="price" required><br>
+
+  <button type="submit">Add Class</button>
+</form>

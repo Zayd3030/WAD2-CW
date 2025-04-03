@@ -1,0 +1,10 @@
+{{> header}}
+<h2>Class Bookings</h2>
+
+{{#bookings}}
+  <p>User: {{username}}</p>
+{{/bookings}}
+
+{{^bookings}}
+  <p>No bookings yet for this class.</p>
+{{/bookings}}
