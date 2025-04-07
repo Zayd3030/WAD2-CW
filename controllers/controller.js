@@ -85,7 +85,6 @@ exports.getUserBookings = (req, res) => {
     });
   });
 };
-
 // Cancel a booking
 exports.cancelBooking = (req, res) => {
   bookingModel.deleteBooking(req.params.bookingId, () => {

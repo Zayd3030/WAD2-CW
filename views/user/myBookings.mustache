@@ -3,23 +3,26 @@
 <h2>My Bookings</h2>
 
 {{#message}}
-  <p style="color: green;">{{message}}</p>
+  <div class="alert alert-info">{{message}}</div>
 {{/message}}
 
 {{#bookings}}
-  <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
-    <h3>{{course.name}}</h3>
-    <p><strong>Date:</strong> {{class.date}}</p>
-    <p><strong>Time:</strong> {{class.time}}</p>
-    <p><strong>Location:</strong> {{class.location}}</p>
-    <p><strong>Price:</strong> £{{class.price}}</p>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{course.name}}</h5>
+      <p>
+        Date: {{class.date}}<br>
+        Time: {{class.time}}<br>
+        Location: {{class.location}}<br>
+        Price: £{{class.price}}
+      </p>
+      <form action="/courses/cancel-booking/{{_id}}" method="POST">
+        <button class="btn btn-danger">Cancel Booking</button>
+      </form>
+    </div>
   </div>
-  <form method="POST" action="/courses/cancel-booking/{{_id}}">
-  <button type="submit" style="color: red;">Cancel Booking</button>
-</form>
-
 {{/bookings}}
 
 {{^bookings}}
-  <p>You haven't booked any classes yet.</p>
+  <p>You have no bookings.</p>
 {{/bookings}}

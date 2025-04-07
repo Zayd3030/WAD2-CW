@@ -3,12 +3,12 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
 
-// GET Login Page
+// GET: Login page
 router.get("/login", (req, res) => {
   res.render("user/login", { message: req.session.message });
 });
 
-// POST Login
+// POST: Login user
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -24,7 +24,7 @@ router.post("/login", (req, res) => {
           _id: user._id,
           username: user.username,
           role: user.role,
-          isOrganiser: user.role === "organiser" // ✅ Key for nav logic
+          isOrganiser: user.role === "organiser"
         };
         res.redirect("/courses");
       } else {
@@ -35,12 +35,12 @@ router.post("/login", (req, res) => {
   });
 });
 
-// GET Register Page
+// GET: Register page
 router.get("/register", (req, res) => {
   res.render("user/register", { message: req.session.message });
 });
 
-// POST Register
+// POST: Register new user
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
 
@@ -51,10 +51,15 @@ router.post("/register", (req, res) => {
     }
 
     bcrypt.hash(password, 10, (err, hash) => {
+      if (err) {
+        req.session.message = "Error creating account.";
+        return res.redirect("/register");
+      }
+
       const newUser = {
         username,
         password: hash,
-        role: "user" // default role
+        role: "user"
       };
 
       userModel.addUser(newUser, () => {
@@ -65,7 +70,7 @@ router.post("/register", (req, res) => {
   });
 });
 
-// Logout
+// GET: Logout
 router.get("/logout", (req, res) => {
   req.session.destroy(() => {
     res.redirect("/login");
