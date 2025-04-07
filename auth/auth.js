@@ -1,15 +1,18 @@
 function checkAuthenticated(req, res, next) {
-    if (req.session.user) return next();
-    res.redirect("/login");
+  if (req.session && req.session.user) {
+    return next();
   }
-  
-  function checkOrganiser(req, res, next) {
-    if (req.session && req.session.user && req.session.user.role === "organiser") {
-      return next();
-    }
-    res.status(403).send("Forbidden: Organiser access only.");
+  res.redirect("/login");
+}
+
+function checkOrganiser(req, res, next) {
+  if (req.session && req.session.user && req.session.user.role === "organiser") {
+    return next();
   }
-  
-  
-  module.exports = { checkAuthenticated, checkOrganiser };
-  
+  res.redirect("/login");
+}
+
+module.exports = {
+  checkAuthenticated,
+  checkOrganiser
+};

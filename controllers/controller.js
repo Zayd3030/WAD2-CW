@@ -3,7 +3,7 @@ const classModel = require("../models/classModel");
 const bookingModel = require("../models/bookingModel");
 const userModel = require("../models/userModel");
 
-// Public: Show all courses
+// Get all courses
 exports.getAllCourses = (req, res) => {
   courseModel.getAllCourses((err, courses) => {
     if (err) return res.send("Error loading courses");
@@ -11,19 +11,24 @@ exports.getAllCourses = (req, res) => {
   });
 };
 
-// Public: View a single course with its classes
+// Get single course with class list
 exports.getCourseDetail = (req, res) => {
   courseModel.getCourseById(req.params.id, (err, course) => {
     if (!course) return res.send("Course not found");
     classModel.getClassesByCourse(req.params.id, (err, classes) => {
       const message = req.session.message;
       req.session.message = null;
-      res.render("course", { course, classes, message });
+      res.render("course", {
+        course,
+        classes,
+        message,
+        user: req.session.user
+      });
     });
   });
 };
 
-// Book a class (with duplicate prevention)
+// Book a class (prevent duplicates)
 exports.bookClass = (req, res) => {
   const userId = req.session.user._id;
   const classId = req.params.classId;
@@ -38,22 +43,18 @@ exports.bookClass = (req, res) => {
     const booking = {
       classId,
       userId,
-      username: req.session.user.username,
+      username: req.session.user.username
     };
 
     bookingModel.addBooking(booking, () => {
-      res.redirect("/courses/confirmation");
+      req.session.message = "Booking successful!";
+      res.redirect("/courses/" + req.body.courseId);
     });
   });
 };
 
-// Booking confirmation
-exports.showConfirmation = (req, res) => {
-  res.render("user/confirmation");
-};
-
-// User: View my bookings
-exports.getUserBookings = async (req, res) => {
+// Get user's bookings
+exports.getUserBookings = (req, res) => {
   bookingModel.getBookingsByUser(req.session.user._id, async (err, bookings) => {
     const message = req.session.message;
     req.session.message = null;
@@ -62,30 +63,29 @@ exports.getUserBookings = async (req, res) => {
       return res.render("user/myBookings", { bookings: [], message });
     }
 
-    const enhancedBookings = await Promise.all(
-      bookings.map(async (booking) => {
-        return new Promise((resolve) => {
-          classModel.getClassById(booking.classId, (err, classData) => {
-            if (!classData) return resolve(null);
-
-            courseModel.getCourseById(classData.courseId, (err, courseData) => {
-              resolve({
-                ...booking,
-                class: classData,
-                course: courseData,
-              });
+    const detailedBookings = await Promise.all(
+      bookings.map(b => new Promise(resolve => {
+        classModel.getClassById(b.classId, (err, cls) => {
+          if (!cls) return resolve(null);
+          courseModel.getCourseById(cls.courseId, (err, course) => {
+            resolve({
+              ...b,
+              class: cls,
+              course: course
             });
           });
         });
-      })
+      }))
     );
 
-    const filtered = enhancedBookings.filter(b => b !== null);
-    res.render("user/myBookings", { bookings: filtered, message });
+    res.render("user/myBookings", {
+      bookings: detailedBookings.filter(b => b !== null),
+      message
+    });
   });
 };
 
-// Cancel booking
+// Cancel a booking
 exports.cancelBooking = (req, res) => {
   bookingModel.deleteBooking(req.params.bookingId, () => {
     req.session.message = "Booking cancelled successfully.";
@@ -93,14 +93,14 @@ exports.cancelBooking = (req, res) => {
   });
 };
 
-// Admin: View bookings for a class
+// Admin: View class bookings
 exports.getClassBookings = (req, res) => {
   bookingModel.getBookingsForClass(req.params.classId, (err, bookings) => {
     res.render("admin/classBookings", { bookings });
   });
 };
 
-// Admin: Export class bookings to PDF
+// Admin: Export bookings to PDF
 exports.exportClassBookingsPDF = (req, res) => {
   const PDFDocument = require("pdfkit");
   bookingModel.getBookingsForClass(req.params.classId, (err, bookings) => {
@@ -115,8 +115,8 @@ exports.exportClassBookingsPDF = (req, res) => {
     if (bookings.length === 0) {
       doc.text("No bookings found.");
     } else {
-      bookings.forEach((booking, index) => {
-        doc.fontSize(12).text(`${index + 1}. ${booking.username}`);
+      bookings.forEach((b, i) => {
+        doc.fontSize(12).text(`${i + 1}. ${b.username}`);
       });
     }
 
@@ -127,15 +127,15 @@ exports.exportClassBookingsPDF = (req, res) => {
 // Admin: View all users
 exports.viewUsers = (req, res) => {
   userModel.getAllUsers((err, users) => {
-    const enhancedUsers = users.map(user => ({
+    const enhanced = users.map(user => ({
       ...user,
       isOrganiser: user.role === "organiser"
     }));
-    res.render("admin/manageUsers", { users: enhancedUsers });
+    res.render("admin/manageUsers", { users: enhanced });
   });
 };
 
-// Admin: Promote to organiser
+// Admin: Promote user
 exports.makeOrganiser = (req, res) => {
   userModel.updateUserRole(req.params.userId, "organiser", () => {
     res.redirect("/admin/manage-users");

@@ -1,24 +1,27 @@
 {{> header}}
-{{#message}}<p style="color:red;">{{message}}</p>{{/message}}
 
 <h2>{{course.name}}</h2>
 <p>{{course.description}}</p>
-<p>Duration: {{course.duration}}</p>
 
-<h3>Upcoming Classes</h3>
+{{#message}}
+  <div class="alert alert-success">{{message}}</div>
+{{/message}}
+
+<h4 class="mt-4">Available Classes:</h4>
+
 {{#classes}}
-  <div class="class-card">
-    <p>Date: {{date}}</p>
-    <p>Time: {{time}}</p>
-    <p>Location: {{location}}</p>
-    <p>Price: £{{price}}</p>
-<form method="POST" action="/courses/book/{{_id}}">
-  <input type="hidden" name="courseId" value="{{../course._id}}">
-  <button type="submit">Book Class</button>
-</form>
+  <div class="card mb-3">
+    <div class="card-body">
+      <p>
+        <strong>Date:</strong> {{date}}<br>
+        <strong>Time:</strong> {{time}}<br>
+        <strong>Location:</strong> {{location}}<br>
+        <strong>Price:</strong> £{{price}}
+      </p>
+      <form action="/courses/book/{{_id}}" method="POST">
+        <input type="hidden" name="courseId" value="{{course._id}}">
+        <button type="submit" class="btn btn-success">Book Class</button>
+      </form>
+    </div>
   </div>
-{{/classes}}
-
-{{^classes}}
-  <p>No classes scheduled for this course yet.</p>
 {{/classes}}
