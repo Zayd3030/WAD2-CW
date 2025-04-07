@@ -1,2 +1,3 @@
 {"username":"test","password":"$2b$10$aVDtr2dxd7xvMzRWLoFH5.hgSSxZBcwJbQJlaFBPUyFYyTO7oKmLu","role":"organiser","_id":"B8f9yYg7Dk9dawhg"}
 {"username":"zayd","password":"$2b$10$jpqARJ9E02kf82J/IzdNae2pFrTMwIc5c7vkiKoHX6/D/Z4Z7Ywsy","role":"user","_id":"PjrTvlKRP0wqYM8D"}
+{"username":"zayd","password":"$2b$10$jpqARJ9E02kf82J/IzdNae2pFrTMwIc5c7vkiKoHX6/D/Z4Z7Ywsy","role":"organiser","_id":"PjrTvlKRP0wqYM8D"}
