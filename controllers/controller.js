@@ -60,7 +60,7 @@ exports.getUserBookings = (req, res) => {
     req.session.message = null;
 
     if (!bookings || bookings.length === 0) {
-      return res.render("user/myBookings", { bookings: [], message });
+      return res.render("user/myBookings", { bookings: [], message, user: req.session.user });
     }
 
     const detailedBookings = await Promise.all(
@@ -80,7 +80,8 @@ exports.getUserBookings = (req, res) => {
 
     res.render("user/myBookings", {
       bookings: detailedBookings.filter(b => b !== null),
-      message
+      message,
+      user: req.session.user
     });
   });
 };
