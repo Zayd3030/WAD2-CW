@@ -1,6 +1,6 @@
 # 💃 Dance Class Booking System
 
-This is a full-stack web application using a MVC that allows users to register, log in, and book dance classe. Admins can manage users, courses, classes, and bookings via an admin dashboard.
+This is a full-stack web application using a MVC that allows users to register, log in, and book dance classes. Admins can manage users, courses, classes, and bookings via an admin dashboard.
 
 ---
 
