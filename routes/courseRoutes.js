@@ -3,7 +3,7 @@ const router = express.Router();
 const controller = require("../controller/controller");
 const { checkAuthenticated } = require("../auth/auth");
 
-router.get("/", checkAuthenticated, controller.getAllCourses);
+router.get("/", controller.getAllCourses);
 router.get("/confirmation", checkAuthenticated, controller.confirmationPage);
 router.get("/my-bookings", checkAuthenticated, controller.myBookings);
 router.post("/book/:classId", checkAuthenticated, controller.bookClass);
