@@ -70,6 +70,4 @@ This is a full-stack web application using a MVC that allows users to register, 
 
 - ✅ **PDF Export**: Admins can download a PDF list of all users booked into a class.
 - ✅ **User Booking History**: Users can view a list of all their booked classes.
-- ✅ **Booking Cancellation**: Users can cancel their own class bookings directly.
-- ✅ **Admin User Management**: Admins can promote/demote/delete users.
-- ✅ **Access Control Middleware**: Prevent unauthorised access to routes using `checkAuthenticated` and `checkOrganiser`.
+- ✅ **Booking Cancellation**: Users can cancel their own class bookings directly..
