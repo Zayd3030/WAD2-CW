@@ -7,15 +7,17 @@
 
 <h3>Upcoming Classes</h3>
 {{#classes}}
-  <div class="class-card">
-    <p>Date: {{date}}</p>
-    <p>Time: {{time}}</p>
-    <p>Location: {{location}}</p>
-    <p>Price: £{{price}}</p>
+  <div class="card mb-3">
+    <div class="card-body">
+      <p><strong>Date:</strong> {{date}}</p>
+      <p><strong>Time:</strong> {{time}}</p>
+      <p><strong>Location:</strong> {{location}}</p>
+      <p><strong>Price:</strong> £{{price}}</p>
 <form method="POST" action="/courses/book/{{_id}}">
   <input type="hidden" name="courseId" value="{{../course._id}}">
   <button type="submit">Book Class</button>
 </form>
+  </div>
   </div>
 {{/classes}}
 
