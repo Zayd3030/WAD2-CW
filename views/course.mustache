@@ -1,11 +1,15 @@
 {{> header}}
-{{#message}}<p style="color:red;">{{message}}</p>{{/message}}
+
+{{#message}}
+<p style="color:red;">{{message}}</p>
+{{/message}}
 
 <h2>{{course.name}}</h2>
 <p>{{course.description}}</p>
 <p>Duration: {{course.duration}}</p>
 
 <h3>Upcoming Classes</h3>
+
 {{#classes}}
   <div class="card mb-3">
     <div class="card-body">
@@ -13,11 +17,19 @@
       <p><strong>Time:</strong> {{time}}</p>
       <p><strong>Location:</strong> {{location}}</p>
       <p><strong>Price:</strong> £{{price}}</p>
-<form method="POST" action="/courses/book/{{_id}}">
-  <input type="hidden" name="courseId" value="{{../course._id}}">
-  <button type="submit">Book Class</button>
-</form>
-  </div>
+
+      {{#user}}
+        <form method="POST" action="/courses/book/{{_id}}">
+          <input type="hidden" name="courseId" value="{{../course._id}}">
+          <button class="btn btn-primary" type="submit">Book Class</button>
+        </form>
+      {{/user}}
+
+      {{^user}}
+        <a href="/courses/guest-book/{{_id}}" class="btn btn-outline-primary mt-2">Book as Guest</a>
+      {{/user}}
+
+    </div>
   </div>
 {{/classes}}
 

@@ -3,11 +3,20 @@ const router = express.Router();
 const controller = require("../controller/controller");
 const { checkAuthenticated } = require("../auth/auth");
 
+// Public route: View all courses
 router.get("/", controller.getAllCourses);
+
+// Authenticated user routes
 router.get("/confirmation", checkAuthenticated, controller.confirmationPage);
 router.get("/my-bookings", checkAuthenticated, controller.myBookings);
 router.post("/book/:classId", checkAuthenticated, controller.bookClass);
 router.post("/cancel-booking/:bookingId", checkAuthenticated, controller.cancelBooking);
-router.get("/:id", checkAuthenticated, controller.getCourseDetails);
+
+// Guest booking routes
+router.get("/guest-book/:classId", controller.guestBookingForm);
+router.post("/guest-book/:classId", controller.submitGuestBooking);
+
+// Public route: View course details (with conditional content)
+router.get("/:id", controller.getCourseDetails);
 
 module.exports = router;

@@ -42,10 +42,12 @@ app.set("views", path.join(__dirname, "views"));
 const authRoutes = require("./routes/authRoutes");
 const courseRoutes = require("./routes/courseRoutes");
 const adminRoutes = require("./routes/adminRoutes");
+const guestRoutes = require("./routes/guestRoutes");
 
 app.use("/", authRoutes);
 app.use("/courses", courseRoutes);
 app.use("/admin", adminRoutes);
+app.use("/guest", guestRoutes);
 
 // Default redirect
 app.get("/", (req, res) => {

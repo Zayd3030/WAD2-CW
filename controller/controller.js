@@ -290,3 +290,50 @@ exports.deleteUser = (req, res) => {
     res.redirect("/admin/manage-users");
   });
 };
+
+// ---------------------- GUEST BOOKINGS ----------------------
+
+exports.guestBookingForm = (req, res) => {
+  const classId = req.params.classId;
+
+  classModel.getClassById(classId, (err, classData) => {
+    if (err || !classData) return res.send("Class not found");
+
+    courseModel.getCourseById(classData.courseId, (err, course) => {
+      if (err || !course) return res.send("Course not found");
+
+      const message = req.session.message;
+      req.session.message = null;
+
+      res.render("guest/guestBooking", {
+        classData,
+        course,
+        message
+      });
+    });
+  });
+};
+
+exports.submitGuestBooking = (req, res) => {
+  const classId = req.params.classId;
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    req.session.message = "Please enter both your name and email to book.";
+    return res.redirect(`/guest/guestBooking/${classId}`);
+  }
+
+  const booking = {
+    classId,
+    userId: "guest",
+    username: `${name} (${email})`
+  };
+
+  bookingModel.addBooking(booking, () => {
+    res.redirect("/guest/guestConfirmation");
+  });
+};
+
+exports.guestConfirmationPage = (req, res) => {
+  res.render("guest/guestConfirmation");
+};
