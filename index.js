@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// ✅ Session setup (must be BEFORE user injection)
+// Session setup (must be BEFORE user injection)
 app.use(
   session({
     secret: "secureSecretKey",
@@ -20,7 +20,7 @@ app.use(
   })
 );
 
-// ✅ Inject session user into all views (AFTER session setup)
+// Inject session user into all views (AFTER session setup)
 app.use((req, res, next) => {
   if (req.session && req.session.user) {
     res.locals.user = {
