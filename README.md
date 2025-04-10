@@ -39,7 +39,7 @@ This is a full-stack web application using a MVC that allows users to register, 
 ## ✨ Features Implemented
 
 ### 🔐 Authentication
-- User registration & login
+- User registration and login
 - Session-based authentication
 - Organiser/admin role distinction
 
@@ -49,10 +49,10 @@ This is a full-stack web application using a MVC that allows users to register, 
 - Classes grouped under relevant courses
 
 ### 📅 Booking System
-- Logged-in users can book available classes
-- Booking confirmation page
-- Prevent duplicate bookings by the same user
-- Users can view and cancel their bookings
+- Guests & logged in users can book available classes
+- Booking confirmation page for both gusts and returning users
+- Prevented duplicate bookings by the same user
+- Logged in users can view and cancel their bookings
 
 ### 🧑‍💼 Admin Panel
 - Add/edit/delete courses and classes
@@ -69,5 +69,5 @@ This is a full-stack web application using a MVC that allows users to register, 
 ## 🛠️ Additional Features (Not in Original Spec)
 
 - ✅ **PDF Export**: Admins can download a PDF list of all users booked into a class.
-- ✅ **User Booking History**: Users can view a list of all their booked classes.
-- ✅ **Booking Cancellation**: Users can cancel their own class bookings directly..
+- ✅ **User Account Creation / Booking History**: Users can create an account, view and manage a list of all their booked classes.
+- ✅ **Booking Cancellation**: Users can cancel their own class bookings directly.
