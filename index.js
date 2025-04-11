@@ -54,7 +54,8 @@ app.get("/", (req, res) => {
   res.redirect("/courses");
 });
 
-// Start server
-app.listen(3000, () => {
-  console.log("Server listening on port: 3000");
+// Start server - Using dynamic port for Heroku
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
 });
