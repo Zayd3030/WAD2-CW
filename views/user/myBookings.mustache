@@ -9,17 +9,19 @@
 {{/message}}
 
 {{#bookings}}
-  <div style="margin-bottom: 20px; border: 1px solid #ccc; padding: 10px;">
-    <h3>{{course.name}}</h3>
-    <p><strong>Date:</strong> {{class.date}}</p>
-    <p><strong>Time:</strong> {{class.time}}</p>
-    <p><strong>Location:</strong> {{class.location}}</p>
-    <p><strong>Price:</strong> £{{class.price}}</p>
-  </div>
-  <form method="POST" action="/courses/cancel-booking/{{_id}}">
-  <button type="submit" style="color: red;">Cancel Booking</button>
-</form>
+  <div class="card mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{course.name}}</h5>
+      <p><strong>Date:</strong> {{class.date}}</p>
+      <p><strong>Time:</strong> {{class.time}}</p>
+      <p><strong>Location:</strong> {{class.location}}</p>
+      <p><strong>Price:</strong> £{{class.price}}</p>
 
+      <form method="POST" action="/courses/cancel-booking/{{_id}}">
+        <button type="submit" class="btn btn-danger">Cancel Booking</button>
+      </form>
+    </div>
+  </div>
 {{/bookings}}
 
 {{^bookings}}
