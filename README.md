@@ -4,7 +4,11 @@ This is a full-stack web application using a MVC that allows users to register, 
 
 ---
 
-## 🚀 How to Run the Site
+## 💻 Live version
+
+Head over to the live version: https://zayd-hussain-wad2-cw-4c8b73e87e34.herokuapp.com/
+
+## 🚀 How to Run the Site (Locally)
 
 ### 🔧 Requirements
 - Node.js (v18+)
@@ -23,6 +27,11 @@ This is a full-stack web application using a MVC that allows users to register, 
 3. **Install dependencies**  
    ```bash
    npm install
+   ```
+
+    ```bash
+   npm install bcrypt body-parser express-session express gray-nedb mustache-express nedb pdfkit sqlite3
+
    ```
 
 4. **Start the server**  
