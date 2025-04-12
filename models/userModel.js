@@ -1,3 +1,5 @@
+// user model for the application using NeDB as the database to store, add, update and delete user information.
+
 const Datastore = require("nedb");
 const bcrypt = require("bcrypt");
 const db = new Datastore({ filename: "users.db", autoload: true });

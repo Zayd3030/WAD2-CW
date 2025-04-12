@@ -1,3 +1,5 @@
+// Routes for the admin dashboard, including course and class management, user management, and booking management.
+
 const express = require("express");
 const router = express.Router();
 const controller = require("../controller/controller");

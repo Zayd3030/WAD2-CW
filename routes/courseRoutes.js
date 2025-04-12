@@ -1,12 +1,14 @@
+// Routes for course related operations, including booking and viewing courses.
+
 const express = require("express");
 const router = express.Router();
 const controller = require("../controller/controller");
 const { checkAuthenticated } = require("../auth/auth");
 
-// Public route: View all courses
+// View all courses
 router.get("/", controller.getAllCourses);
 
-// Authenticated user routes
+// Authenticated user routes for booking classes
 router.get("/confirmation", checkAuthenticated, controller.confirmationPage);
 router.get("/my-bookings", checkAuthenticated, controller.myBookings);
 router.post("/book/:classId", checkAuthenticated, controller.bookClass);

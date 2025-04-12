@@ -1,3 +1,4 @@
+// Controller functions for handling functionalities in the web application
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
 const courseModel = require("../models/courseModel");

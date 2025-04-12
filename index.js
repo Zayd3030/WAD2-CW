@@ -1,3 +1,5 @@
+// index.js sets up the Express server, middleware, and routes for the application.
+
 const express = require("express");
 const path = require("path");
 const mustacheExpress = require("mustache-express");
