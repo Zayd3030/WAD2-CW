@@ -1,20 +1,32 @@
 {{! Mustache template for adding a class to a course }}
 
 {{> header}}
-<h2>Add Class to Course</h2>
 
-<form method="POST" action="/admin/add-class/{{courseId}}">
-  <label>Date:</label><br>
-  <input type="date" name="date" required><br>
+<div class="container mt-5">
+  <h2>Add Class to Course</h2>
 
-  <label>Time:</label><br>
-  <input type="time" name="time" required><br>
+  <form method="POST" action="/admin/add-class/{{courseId}}">
+    <div class="mb-3">
+      <label class="form-label">Date</label>
+      <input type="date" class="form-control" name="date" required />
+    </div>
 
-  <label>Location:</label><br>
-  <input type="text" name="location" required><br>
+    <div class="mb-3">
+      <label class="form-label">Time</label>
+      <input type="time" class="form-control" name="time" required />
+    </div>
 
-  <label>Price (£):</label><br>
-  <input type="number" name="price" required><br>
+    <div class="mb-3">
+      <label class="form-label">Location</label>
+      <input type="text" class="form-control" name="location" required />
+    </div>
 
-  <button type="submit">Add Class</button>
-</form>
+    <div class="mb-3">
+      <label class="form-label">Price (£)</label>
+      <input type="number" class="form-control" name="price" required />
+    </div>
+
+    <button type="submit" class="btn btn-success">Add Class</button>
+  </form>
+</div>
+

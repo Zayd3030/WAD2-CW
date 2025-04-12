@@ -2,38 +2,51 @@
 
 {{> header}}
 
-<h2>Admin Dashboard</h2>
+<div class="container mt-4">
+  <h2 class="text-center mb-4">Admin Dashboard ✍</h2>
 
-<a href="/admin/add-course">Add New Course</a>
-<a href="/admin/manage-users">Manage Users</a>
-
-{{#courses}}
-  <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-    <h3>{{name}}</h3>
-    <p>{{description}}</p>
-    <p>Duration: {{duration}}</p>
-
-    <a href="/admin/edit-course/{{_id}}">Edit Course</a>
-    <form method="POST" action="/admin/delete-course/{{_id}}" style="display:inline;">
-      <button type="submit" style="color:red;">Delete Course</button>
-    </form>
-
-    <a href="/admin/add-class/{{_id}}">Add Class</a>
-
-    <h4>Classes:</h4>
-    {{#classes}}
-      <p>
-        {{date}} - {{time}} at {{location}} (£{{price}})
-        <a href="/admin/edit-class/{{_id}}">Edit</a>
-        <form method="POST" action="/admin/delete-class/{{_id}}" style="display:inline;">
-          <button type="submit" style="color:red;">Delete</button>
-        </form>
-        <a href="/admin/bookings/{{_id}}">View Bookings</a>
-      </p>
-    {{/classes}}
-
-    {{^classes}}
-      <p>No classes yet for this course.</p>
-    {{/classes}}
+  <div class="d-flex justify-content-between mb-4">
+    <a href="/admin/add-course" class="btn btn-primary">Add New Course ➕</a>
+    <a href="/admin/manage-users" class="btn btn-secondary">Manage Users 👤</a>
   </div>
-{{/courses}}
+
+<h2>Courses:</h2>
+
+  {{#courses}}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h4 class="card-title">{{name}}</h4>
+        <p class="card-text">{{description}}</p>
+        <p class="card-text"><strong>Duration:</strong> {{duration}} weeks</p>
+
+        <div class="mb-3">
+          <a href="/admin/edit-course/{{_id}}" class="btn btn-outline-primary btn-sm">Edit Course</a>
+          <form method="POST" action="/admin/delete-course/{{_id}}" class="d-inline">
+            <button type="submit" class="btn btn-outline-danger btn-sm">Delete Course</button>
+          </form>
+          <a href="/admin/add-class/{{_id}}" class="btn btn-outline-success btn-sm">Add Class</a>
+        </div>
+
+        <h5>Classes:</h5>
+        {{#classes}}
+          <div class="border rounded p-2 mb-2">
+            <p class="mb-1">
+              <strong>{{time}} Class </strong> on  {{date}} - {{location}} (£{{price}})
+            </p>
+            <div>
+              <a href="/admin/edit-class/{{_id}}" class="btn btn-sm btn-outline-primary">Edit</a>
+              <form method="POST" action="/admin/delete-class/{{_id}}" class="d-inline">
+                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+              <a href="/admin/bookings/{{_id}}" class="btn btn-sm btn-outline-dark">View Bookings</a>
+            </div>
+          </div>
+        {{/classes}}
+
+        {{^classes}}
+          <p class="text-muted">No classes yet for this course.</p>
+        {{/classes}}
+      </div>
+    </div>
+  {{/courses}}
+</div>

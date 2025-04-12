@@ -1,23 +1,26 @@
 {{! Mustache template for displaying class bookings in the admin panel }}
 
 {{> header}}
-<h2>Class Bookings</h2>
 
-<a href="/admin/bookings/{{bookings.0.classId}}/export" target="_blank">
-  📄 Download Booking List as PDF
-</a>
+<div class="container mt-5">
+  <h2>Class Bookings</h2>
 
+  <a href="/admin/bookings/{{bookings.0.classId}}/export" class="btn btn-outline-secondary mb-3" target="_blank">
+    📄 Download Booking List as PDF
+  </a>
 
-{{#bookings}}
-  <div style="margin-bottom: 10px; border: 1px solid #ccc; padding: 10px;">
-  <p><strong>User:</strong> {{username}}</p>
+  {{#bookings}}
+    <div class="card mb-3">
+      <div class="card-body">
+        <p><strong>User:</strong> {{username}}</p>
+        <form method="POST" action="/admin/remove-booking/{{_id}}">
+          <button type="submit" class="btn btn-danger">Remove from Booking</button>
+        </form>
+      </div>
+    </div>
+  {{/bookings}}
 
-  <form method="POST" action="/admin/remove-booking/{{_id}}">
-    <button type="submit" style="color: red;">Remove from Booking</button>
-  </form>
+  {{^bookings}}
+    <p>No bookings yet for this class.</p>
+  {{/bookings}}
 </div>
-{{/bookings}}
-
-{{^bookings}}
-  <p>No bookings yet for this class.</p>
-{{/bookings}}

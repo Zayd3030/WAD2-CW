@@ -2,28 +2,30 @@
 
 {{> header}}
 
-<h2>My Bookings</h2>
+<div class="container mt-5">
+  <h2 class="mb-4">My Bookings</h2>
 
-{{#message}}
-  <p style="color: green;">{{message}}</p>
-{{/message}}
+  {{#message}}
+    <div class="alert alert-success">{{message}}</div>
+  {{/message}}
 
-{{#bookings}}
-  <div class="card mb-3">
-    <div class="card-body">
-      <h5 class="card-title">{{course.name}}</h5>
-      <p><strong>Date:</strong> {{class.date}}</p>
-      <p><strong>Time:</strong> {{class.time}}</p>
-      <p><strong>Location:</strong> {{class.location}}</p>
-      <p><strong>Price:</strong> £{{class.price}}</p>
+  {{#bookings}}
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{course.name}}</h5>
+        <p class="mb-1"><strong>Date:</strong> {{class.date}}</p>
+        <p class="mb-1"><strong>Time:</strong> {{class.time}}</p>
+        <p class="mb-1"><strong>Location:</strong> {{class.location}}</p>
+        <p class="mb-3"><strong>Price:</strong> £{{class.price}}</p>
 
-      <form method="POST" action="/courses/cancel-booking/{{_id}}">
-        <button type="submit" class="btn btn-danger">Cancel Booking</button>
-      </form>
+        <form method="POST" action="/courses/cancel-booking/{{_id}}">
+          <button type="submit" class="btn btn-danger">Cancel Booking</button>
+        </form>
+      </div>
     </div>
-  </div>
-{{/bookings}}
+  {{/bookings}}
 
-{{^bookings}}
-  <p>You haven't booked any classes yet.</p>
-{{/bookings}}
+  {{^bookings}}
+    <div class="alert alert-warning">You haven't booked any classes yet.</div>
+  {{/bookings}}
+</div>
