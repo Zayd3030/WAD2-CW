@@ -51,6 +51,7 @@ Head over to the live version: https://zayd-hussain-wad2-cw-4c8b73e87e34.herokua
 - User registration and login
 - Session-based authentication
 - Organiser/admin role distinction
+- Password encryption using Bcrypt
 
 ### 📚 Courses & Classes
 - View all available courses and class details
@@ -63,7 +64,7 @@ Head over to the live version: https://zayd-hussain-wad2-cw-4c8b73e87e34.herokua
 - Prevented duplicate bookings by the same user
 - Logged in users can view and cancel their bookings
 
-### 🧑‍💼 Admin Panel
+### ✍ Admin Panel
 - Add/edit/delete courses and classes
 - View class-specific booking lists
 - Export class bookings as a downloadable PDF
@@ -75,8 +76,9 @@ Head over to the live version: https://zayd-hussain-wad2-cw-4c8b73e87e34.herokua
 
 ---
 
-## 🛠️ Additional Features (Not in Original Spec)
+## 🛠️ Additional Features (Not in Original Specification)
 
 - ✅ **PDF Export**: Admins can download a PDF list of all users booked into a class.
-- ✅ **User Account Creation / Booking History**: Users can create an account, view and manage a list of all their booked classes.
+- ✅ **User Account Creation**: Users can create an account and book classes.
+- ✅ **User Booking History**: Users can view and manage a list of all their booked classes.
 - ✅ **Booking Cancellation**: Users can cancel their own class bookings directly.
